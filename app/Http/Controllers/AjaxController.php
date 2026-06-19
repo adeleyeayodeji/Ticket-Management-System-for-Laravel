@@ -31,69 +31,6 @@ class AjaxController extends Controller
         return view('auth.register');
     }
 
-
-    /**
-     * Greet the user - Simple AJAX POST example
-     */
-    public function greet(Request $request)
-    {
-        $name = $request->input('name', 'Guest');
-
-        return response()->json([
-            'success' => true,
-            'message' => "Hello, {$name}! Welcome to Laravel AJAX.",
-            'timestamp' => now()->format('Y-m-d H:i:s'),
-            'data' => [
-                'name' => $name,
-                'greeting' => "This is a response from the server for {$name}"
-            ]
-        ]);
-    }
-
-    /**
-     * Get all users - Simple AJAX GET example
-     */
-    public function getUsers()
-    {
-        $users = User::all(['id', 'name', 'email'])->toArray();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Users retrieved successfully',
-            'count' => count($users),
-            'data' => $users,
-            'timestamp' => now()->format('Y-m-d H:i:s')
-        ]);
-    }
-
-    /**
-     * Store data - AJAX POST with JSON example
-     */
-    public function storeData(Request $request)
-    {
-        // Get JSON data
-        $data = $request->all();
-
-        // Validate if needed
-        $validated = $request->validate([
-            'title' => 'nullable|string',
-            'content' => 'nullable|string'
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Data stored successfully',
-            'received_data' => $data,
-            'validated_data' => $validated,
-            'timestamp' => now()->format('Y-m-d H:i:s'),
-            'server_info' => [
-                'method' => $request->method(),
-                'content_type' => $request->header('Content-Type'),
-                'user_agent' => $request->header('User-Agent')
-            ]
-        ]);
-    }
-
     /**
      * Login user
      */
