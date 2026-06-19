@@ -14,17 +14,17 @@ Route::post('/ajax/greet', [AjaxController::class, 'greet'])->name('ajax.greet')
 Route::get('/ajax/users', [AjaxController::class, 'getUsers'])->name('ajax.users');
 Route::post('/ajax/store', [AjaxController::class, 'storeData'])->name('ajax.store');
 
-//login page
-Route::get('/login', [AjaxController::class, 'showLoginForm'])->name('login.form');
-//register page
-Route::get('/register', [AjaxController::class, 'showRegisterForm'])->name('register.form');
+// Guest Routes (Redirect to dashboard if authenticated)
+Route::middleware('check.guest')->group(function () {
+    //login page
+    Route::get('/login', [AjaxController::class, 'showLoginForm'])->name('login.form');
+    //register page
+    Route::get('/register', [AjaxController::class, 'showRegisterForm'])->name('register.form');
+    // Authentication Routes
+    Route::post('/login', [AjaxController::class, 'login'])->name('login');
+    Route::post('/register', [AjaxController::class, 'register'])->name('register');
+});
 
-//logout
-Route::get('/logout', [AjaxController::class, 'logout'])->name('logout');
-
-// Authentication Routes
-Route::post('/login', [AjaxController::class, 'login'])->name('login');
-Route::post('/register', [AjaxController::class, 'register'])->name('register');
 //update ticket status
 Route::post('/update-ticket-status', [AjaxController::class, 'updateTicketStatus'])->name('update.ticket.status');
 
@@ -34,4 +34,6 @@ Route::post('/submit-ticket', [AjaxController::class, 'submitTicket'])->name('su
 // Protected Routes (Require Authentication)
 Route::middleware('check.auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    //logout
+    Route::get('/logout', [AjaxController::class, 'logout'])->name('logout');
 });

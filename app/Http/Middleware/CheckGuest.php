@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckAuth
+class CheckGuest
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class CheckAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
-            //redirect to login page
-            return redirect()->route('login.form');
+        if (Auth::check()) {
+            //redirect to dashboard if already authenticated
+            return redirect()->route('dashboard');
         }
 
         return $next($request);

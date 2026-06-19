@@ -57,7 +57,7 @@
     <div class="dashboard-container">
         <div class="header">
             <h1>Dashboard</h1>
-            <button class="btn btn-light" onclick="logout()">Logout</button>
+            <a class="btn btn-light" href="{{ route('logout') }}">Logout</a>
         </div>
 
         <div class="card">
@@ -115,7 +115,8 @@
                                         data-status="{{ $ticket->status }}"
                                         data-description="{{ $ticket->description }}"
                                         data-created-at="{{ $ticket->created_at->format('Y-m-d H:i') }}"
-                                        data-id="{{ $ticket->ticket_id }}">View</a>
+                                        data-id="{{ $ticket->ticket_id }}" data-email="{{ $ticket->email }}"
+                                        data-name="{{ $ticket->name }}">View</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -165,10 +166,17 @@
                 var description = button.data('description');
                 var createdAt = button.data('created-at');
                 var ticketId = button.data('id');
+                var email = button.data('email');
+                var name = button.data('name');
+
                 var modal = $(this);
                 modal.find('.modal-title').text(title);
                 modal.find('.modal-body').html(
-                    `<p><strong>Status:</strong> ${status}</p>
+                    `<div class="mb-3 pb-3 border-bottom">
+                        <p class="mb-1"><strong>User Name:</strong> ${name}</p>
+                        <p class="mb-0"><strong>Email:</strong> ${email}</p>
+                    </div>
+                    <p><strong>Status:</strong> ${status}</p>
                     <p><strong>Description:</strong> ${description}</p>
                     <p><strong>Created At:</strong> ${createdAt}</p>
 
