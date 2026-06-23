@@ -78,7 +78,8 @@ class AjaxController extends Controller
             $validated = Validator::make($request->all(), [
                 'username' => 'required|string|max:255',
                 'email' => 'required|email|unique:users',
-                'password' => 'required|string|min:6'
+                //validate for special character and an uppercase letter in the password
+                'password' => 'required|string|min:6|regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).+$/'
             ]);
 
             //check for validation failure

@@ -63,6 +63,15 @@ $(document).ready(function () {
         // Get form data
         let serializedData = form.serialize();
 
+        //get the password element
+        var passwordElement = form.find('input[name="password"]');
+
+        //check if password is empty
+        if (passwordElement.val().trim() === "") {
+            alert("Password cannot be empty.");
+            return; // Stop the form submission
+        }
+
         /**
          * Ajax
          */
